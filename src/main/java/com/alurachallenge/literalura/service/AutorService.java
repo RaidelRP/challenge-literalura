@@ -20,4 +20,9 @@ public class AutorService {
         Optional<Autor> a = autorRepository.findFirstByNombre(autor.getNombre());
         return a.orElse(autor);
     }
+
+    public void listarAutores() {
+        var autores = autorRepository.findAll();
+        autores.forEach(a -> System.out.printf("%s (%d - %d)\n", a.getNombre(), a.getNacimiento(), a.getMuerte()));
+    }
 }

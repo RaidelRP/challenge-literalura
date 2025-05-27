@@ -36,6 +36,7 @@ public class Principal {
                     listarLibros();
                     break;
                 case 2:
+                    listarAutores();
                     break;
                 case 3:
                     buscarLibro();
@@ -81,8 +82,15 @@ public class Principal {
 
     private void listarLibros() {
         System.out.println("*******************************");
-        System.out.println("\tA continuación se muestran todos los libros que se han consultado y que se encuentran en la base de datos\n");
+        System.out.println("\tA continuación se muestran todos los libros que se han consultado que se encuentran en la base de datos\n");
         libroService.listarLibros();
+        System.out.println("*******************************\n");
+    }
+
+    private void listarAutores() {
+        System.out.println("*******************************");
+        System.out.println("\tA continuación se muestran todos los autores de los libros que se han consultado que se encuentran en la base de datos\n");
+        libroService.listarAutores();
         System.out.println("*******************************\n");
     }
 
