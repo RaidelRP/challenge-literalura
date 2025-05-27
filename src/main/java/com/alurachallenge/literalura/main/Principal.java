@@ -1,11 +1,10 @@
 package com.alurachallenge.literalura.main;
 
-import com.alurachallenge.literalura.model.Autor;
 import com.alurachallenge.literalura.model.Datos;
 import com.alurachallenge.literalura.model.DatosLibro;
-import com.alurachallenge.literalura.model.Libro;
 import com.alurachallenge.literalura.repository.LibroRepository;
 import com.alurachallenge.literalura.service.ConsumoAPI;
+import com.alurachallenge.literalura.service.LibroService;
 import com.alurachallenge.literalura.util.Conversor;
 
 import java.util.Optional;
@@ -17,23 +16,66 @@ public class Principal {
     private final String BASE_URL = "https://gutendex.com/books/";
 
     private final LibroRepository libroRepository;
+    private final LibroService libroService;
 
-    public Principal(LibroRepository libroRepository) {
+    public Principal(LibroRepository libroRepository, LibroService libroService) {
         scanner = new Scanner(System.in);
         consumoAPI = new ConsumoAPI();
         this.libroRepository = libroRepository;
+        this.libroService = libroService;
     }
 
     public void menu() {
-        buscarLibro();
+        System.out.println("*******************************");
+        System.out.println("*  BIENVENIDO A LITERALURA    *");
+        System.out.println("*******************************");
+        System.out.println("Seleccione una opción para continuar: ");
+        opciones();
+        int opcion = leerEntero();
+        while (opcion != 0) {
+            switch (opcion) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    buscarLibro();
+                    break;
+                default:
+                    System.out.println("Opción no válida");
+                    break;
+            }
+            System.out.println("Seleccione una opción para continuar: ");
+            opciones();
+            opcion = leerEntero();
+        }
+        System.out.println("Finalizando programa");
+    }
+
+    private int leerEntero() {
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("El valor introducido no es un entero válido. Intente nuevamente: ");
+            return leerEntero();
+        }
+    }
+
+    private void opciones() {
+        System.out.println("1. Listar Libros");
+        System.out.println("2. Listar Autores");
+        System.out.println("3. Buscar Libro");
+        System.out.println("0. Salir");
     }
 
     private void buscarLibro() {
+        System.out.println("*******************************");
+        System.out.println("\tA continuación deberá introducir parte del título de un libro para buscarlo en el sitio de Gutendex\n");
+        System.out.println("Escriba el título a buscar: ");
         var titulo = scanner.nextLine();
 
         var url = String.format("%s?search=%s", BASE_URL, Conversor.formatoBusqueda(titulo));
         var json = consumoAPI.obtenerDatos(url);
-
         var busqueda = Conversor.convertirDatosFromJson(json, Datos.class);
 
         Optional<DatosLibro> libroBuscado = busqueda.libros().stream()
@@ -43,16 +85,10 @@ public class Principal {
         if (libroBuscado.isPresent()) {
             DatosLibro datosLibro = libroBuscado.get();
             System.out.printf("Libro encontrado: %s%n", datosLibro);
-
-            var autores = datosLibro.autores()
-                    .stream()
-                    .map(Autor::new)
-                    .toList();
-            var libro = new Libro(datosLibro);
-
-            libro.setAutores(autores);
-            libroRepository.save(libro);
+            libroService.insertarLibro(datosLibro);
         } else
-            System.out.printf("No se ha encontrado el libro a partir del título: %s%n", titulo);
+            System.out.printf("No se ha encontrado el libro a partir del título: \"%s\"%n", titulo);
+
+        System.out.println("*******************************");
     }
 }

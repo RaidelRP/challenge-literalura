@@ -13,7 +13,7 @@ public class Autor {
     private int nacimiento;
     private int muerte;
 
-    @ManyToMany(mappedBy = "autores", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "autores", fetch = FetchType.EAGER)
     private List<Libro> libros;
 
     public Autor() {

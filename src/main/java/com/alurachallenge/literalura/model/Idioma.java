@@ -8,8 +8,8 @@ public enum Idioma {
     DE("de", "alemán"),
     IT("it", "italiano");
 
-    private String codigo;
-    private String nombre;
+    private final String codigo;
+    private final String nombre;
 
     Idioma(String codigo, String nombre) {
         this.codigo = codigo;

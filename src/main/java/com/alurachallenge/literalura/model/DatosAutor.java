@@ -10,10 +10,10 @@ public record DatosAutor(
     @Override
     public String toString() {
         var partes = nombre.split(", ");
-        String resultado = "";
+        StringBuilder resultado = new StringBuilder();
         for (int i = partes.length - 1; i >= 0; i--) {
-            resultado += partes[i] + (i > 0 ? " " : "");
+            resultado.append(partes[i]).append(i > 0 ? " " : "");
         }
-        return resultado;
+        return resultado.toString();
     }
 }
