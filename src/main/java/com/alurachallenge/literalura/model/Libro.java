@@ -94,4 +94,9 @@ public class Libro {
     public void setIdioma(Idioma idioma) {
         this.idioma = idioma;
     }
+
+    @Override
+    public String toString() {
+        return String.format("\"%s\" (%s) por %s. %d descargas", titulo, idioma.getNombre(), autores, cantidadDescargas);
+    }
 }

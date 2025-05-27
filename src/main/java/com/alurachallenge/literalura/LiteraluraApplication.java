@@ -1,7 +1,6 @@
 package com.alurachallenge.literalura;
 
 import com.alurachallenge.literalura.main.Principal;
-import com.alurachallenge.literalura.repository.LibroRepository;
 import com.alurachallenge.literalura.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,9 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LiteraluraApplication implements CommandLineRunner {
     @Autowired
-    private LibroRepository libroRepository;
-
-    @Autowired
     private LibroService libroService;
 
     public static void main(String[] args) {
@@ -22,7 +18,7 @@ public class LiteraluraApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Principal principal = new Principal(libroRepository, libroService);
+        Principal principal = new Principal(libroService);
         principal.menu();
     }
 }

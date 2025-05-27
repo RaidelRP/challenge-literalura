@@ -33,4 +33,12 @@ public enum Idioma {
         }
         return null;
     }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
 }

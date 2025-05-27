@@ -33,4 +33,9 @@ public class LibroService {
             libroRepository.save(libro);
         } else System.out.println("El libro buscado ya existe en la base de datos");
     }
+
+    public void listarLibros() {
+        var libros = libroRepository.findAll();
+        libros.forEach(System.out::println);
+    }
 }
