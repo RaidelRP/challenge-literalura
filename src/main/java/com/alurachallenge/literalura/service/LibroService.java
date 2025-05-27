@@ -2,6 +2,7 @@ package com.alurachallenge.literalura.service;
 
 import com.alurachallenge.literalura.model.Autor;
 import com.alurachallenge.literalura.model.DatosLibro;
+import com.alurachallenge.literalura.model.Idioma;
 import com.alurachallenge.literalura.model.Libro;
 import com.alurachallenge.literalura.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,22 @@ public class LibroService {
     public void listarLibros() {
         var libros = libroRepository.findAll();
         libros.forEach(System.out::println);
+    }
+
+    public void listarLibrosPorIdioma(String idioma) {
+        Idioma lang = Idioma.getIdiomaFromCodigo(idioma);
+        if (lang == null) {
+            lang = Idioma.getIdiomaFromNombre(idioma);
+        }
+        if (lang != null) {
+            var libros = libroRepository.findAllByIdioma(lang);
+            if (!libros.isEmpty()) {
+                libros.forEach(System.out::println);
+            } else {
+                System.out.printf("No se han encontrado libros en %s%n", lang.getNombre());
+            }
+        } else {
+            System.out.println("El idioma buscado no existe o no está escrito correctamente");
+        }
     }
 }

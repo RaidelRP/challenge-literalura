@@ -4,7 +4,7 @@ public enum Idioma {
     ES("es", "español"),
     EN("en", "inglés"),
     FR("fr", "francés"),
-    PT("pt", "prtugués"),
+    PT("pt", "portugués"),
     DE("de", "alemán"),
     IT("it", "italiano");
 
@@ -40,5 +40,16 @@ public enum Idioma {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public static String listarIdiomas() {
+        String resultado = """
+                Código - Nombre	
+                _________________
+                """;
+        for (Idioma idioma : Idioma.values()) {
+            resultado += idioma.getCodigo() + " - " + idioma.getNombre() + "\n";
+        }
+        return resultado;
     }
 }

@@ -2,6 +2,7 @@ package com.alurachallenge.literalura.main;
 
 import com.alurachallenge.literalura.model.Datos;
 import com.alurachallenge.literalura.model.DatosLibro;
+import com.alurachallenge.literalura.model.Idioma;
 import com.alurachallenge.literalura.service.ConsumoAPI;
 import com.alurachallenge.literalura.service.LibroService;
 import com.alurachallenge.literalura.util.Conversor;
@@ -39,6 +40,17 @@ public class Principal {
                 case 3:
                     buscarLibro();
                     break;
+                case 4:
+                    listarLibrosPorIdioma();
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
                 default:
                     System.out.println("Opción no válida");
                     break;
@@ -63,6 +75,7 @@ public class Principal {
         System.out.println("1. Listar Libros");
         System.out.println("2. Listar Autores");
         System.out.println("3. Buscar Libro");
+        System.out.println("4. Listar Libros por idioma");
         System.out.println("0. Salir");
     }
 
@@ -70,7 +83,17 @@ public class Principal {
         System.out.println("*******************************");
         System.out.println("\tA continuación se muestran todos los libros que se han consultado y que se encuentran en la base de datos\n");
         libroService.listarLibros();
+        System.out.println("*******************************\n");
+    }
+
+    private void listarLibrosPorIdioma() {
         System.out.println("*******************************");
+        System.out.println("\tA continuación se muestran los idiomas en los que pueden ser buscados los libros. Tanto el código como el nombre son válidos para la búsqueda\n");
+        System.out.println(Idioma.listarIdiomas());
+        System.out.println("Selecciona un idioma para buscar:");
+        String idioma = scanner.nextLine();
+        libroService.listarLibrosPorIdioma(idioma);
+        System.out.println("*******************************\n");
     }
 
     private void buscarLibro() {
@@ -94,6 +117,6 @@ public class Principal {
         } else
             System.out.printf("No se ha encontrado el libro a partir del título: \"%s\"%n", titulo);
 
-        System.out.println("*******************************");
+        System.out.println("*******************************\n");
     }
 }
