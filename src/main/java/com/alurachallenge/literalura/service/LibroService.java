@@ -69,4 +69,24 @@ public class LibroService {
         var libros = libroRepository.topLibrosDescargados();
         libros.forEach(System.out::println);
     }
+
+    public void buscarLibrosPorAutor(String nombre) {
+        var libros = libroRepository.findAll();
+        var autores = autorService.buscarAutoresPorNombre(nombre);
+        autores.stream()
+                .forEach(a -> libros.stream() // Por cada autor que coincida el nombre
+                        .filter(l -> libroContieneAutor(l, a))  // Filtrar de todos los libros los que contengan cada autor
+                        .forEach(System.out::println)
+                );
+    }
+
+    public boolean libroContieneAutor(Libro libro, Autor autor) {
+        var autores = libro.getAutores();
+        for (Autor a : autores) {
+            if (a.getNombre().equals(autor.getNombre())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

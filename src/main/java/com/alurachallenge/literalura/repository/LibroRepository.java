@@ -17,4 +17,11 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
 
     @Query("SELECT l FROM Libro l ORDER BY l.cantidadDescargas DESC LIMIT 10")
     List<Libro> topLibrosDescargados();
+
+    /*@Query("""
+            SELECT l FROM Libro l \
+            INNER JOIN libro_autor ON l.id = libro_autor.libro_id \
+            INNER JOIN Autor a ON libro_autor.id_autor = a.id \
+            WHERE a.nombre ILIKE %:nombre""")
+    List<Libro> buscarLibrosPorAutor(String nombre);*/
 }

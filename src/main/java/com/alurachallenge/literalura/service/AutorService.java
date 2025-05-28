@@ -5,6 +5,7 @@ import com.alurachallenge.literalura.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +30,9 @@ public class AutorService {
     public void buscarAutoresPorAnno(int anno) {
         var autores = autorRepository.autoresPorAnno(anno);
         autores.forEach(a -> System.out.printf("%s (%d - %d)\n", a.getNombre(), a.getNacimiento(), a.getMuerte()));
+    }
+
+    public List<Autor> buscarAutoresPorNombre(String nombre) {
+        return autorRepository.autoresPorNombre(nombre);
     }
 }

@@ -50,6 +50,9 @@ public class Principal {
                 case 6:
                     topLibrosDescargados();
                     break;
+                case 7:
+                    buscarLibrosPorAutor();
+                    break;
                 default:
                     System.out.println("Opción no válida");
                     break;
@@ -77,6 +80,7 @@ public class Principal {
         System.out.println("4. Listar libros por idioma");
         System.out.println("5. Buscar autores por año");
         System.out.println("6. Libros más descargados");
+        System.out.println("7. Buscar libros por autor");
         System.out.println("0. Salir");
     }
 
@@ -91,6 +95,30 @@ public class Principal {
         System.out.println("*******************************");
         System.out.println("\tA continuación se muestran todos los autores de los libros que se han consultado que se encuentran en la base de datos\n");
         libroService.listarAutores();
+        System.out.println("*******************************\n");
+    }
+
+    private void buscarLibro() {
+        System.out.println("*******************************");
+        System.out.println("\tA continuación deberá introducir parte del título de un libro para buscarlo en el sitio de Gutendex\n");
+        System.out.println("Escriba el título a buscar: ");
+        var titulo = scanner.nextLine();
+
+        var url = String.format("%s?search=%s", BASE_URL, Conversor.formatoBusqueda(titulo));
+        var json = consumoAPI.obtenerDatos(url);
+        var busqueda = Conversor.convertirDatosFromJson(json, Datos.class);
+
+        Optional<DatosLibro> libroBuscado = busqueda.libros().stream()
+                .filter(l -> l.titulo().toLowerCase().contains(titulo.toLowerCase()))
+                .findFirst();
+
+        if (libroBuscado.isPresent()) {
+            DatosLibro datosLibro = libroBuscado.get();
+            System.out.printf("Libro encontrado: %s%n", datosLibro);
+            libroService.insertarLibro(datosLibro);
+        } else
+            System.out.printf("No se ha encontrado el libro a partir del título: \"%s\"%n", titulo);
+
         System.out.println("*******************************\n");
     }
 
@@ -120,27 +148,12 @@ public class Principal {
         System.out.println("*******************************\n");
     }
 
-    private void buscarLibro() {
+    private void buscarLibrosPorAutor() {
         System.out.println("*******************************");
-        System.out.println("\tA continuación deberá introducir parte del título de un libro para buscarlo en el sitio de Gutendex\n");
-        System.out.println("Escriba el título a buscar: ");
-        var titulo = scanner.nextLine();
-
-        var url = String.format("%s?search=%s", BASE_URL, Conversor.formatoBusqueda(titulo));
-        var json = consumoAPI.obtenerDatos(url);
-        var busqueda = Conversor.convertirDatosFromJson(json, Datos.class);
-
-        Optional<DatosLibro> libroBuscado = busqueda.libros().stream()
-                .filter(l -> l.titulo().toLowerCase().contains(titulo.toLowerCase()))
-                .findFirst();
-
-        if (libroBuscado.isPresent()) {
-            DatosLibro datosLibro = libroBuscado.get();
-            System.out.printf("Libro encontrado: %s%n", datosLibro);
-            libroService.insertarLibro(datosLibro);
-        } else
-            System.out.printf("No se ha encontrado el libro a partir del título: \"%s\"%n", titulo);
-
+        System.out.println("\tA continuación deberá introducir parte del nombre de un autor para buscar los libros que ha escrito");
+        System.out.println("Escriba el nombre a buscar: ");
+        var nombre = scanner.nextLine();
+        libroService.buscarLibrosPorAutor(nombre);
         System.out.println("*******************************\n");
     }
 }
