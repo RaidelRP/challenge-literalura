@@ -64,4 +64,9 @@ public class LibroService {
     public void buscarAutoresPorAnno(int anno) {
         autorService.buscarAutoresPorAnno(anno);
     }
+
+    public void topLibrosDescargados() {
+        var libros = libroRepository.topLibrosDescargados();
+        libros.forEach(System.out::println);
+    }
 }

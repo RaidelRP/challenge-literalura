@@ -48,10 +48,7 @@ public class Principal {
                     buscarAutoresPorAnno();
                     break;
                 case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
+                    topLibrosDescargados();
                     break;
                 default:
                     System.out.println("Opción no válida");
@@ -79,6 +76,7 @@ public class Principal {
         System.out.println("3. Buscar libro");
         System.out.println("4. Listar libros por idioma");
         System.out.println("5. Buscar autores por año");
+        System.out.println("6. Libros más descargados");
         System.out.println("0. Salir");
     }
 
@@ -112,6 +110,13 @@ public class Principal {
         System.out.println("Escriba un año para buscar:");
         int anno = leerEntero();
         libroService.buscarAutoresPorAnno(anno);
+        System.out.println("*******************************\n");
+    }
+
+    private void topLibrosDescargados() {
+        System.out.println("*******************************");
+        System.out.println("\tA continuación se muestran los 10 libros más descargados\n");
+        libroService.topLibrosDescargados();
         System.out.println("*******************************\n");
     }
 
