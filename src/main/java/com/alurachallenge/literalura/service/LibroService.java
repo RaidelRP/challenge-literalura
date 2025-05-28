@@ -4,7 +4,6 @@ import com.alurachallenge.literalura.model.Autor;
 import com.alurachallenge.literalura.model.DatosLibro;
 import com.alurachallenge.literalura.model.Idioma;
 import com.alurachallenge.literalura.model.Libro;
-import com.alurachallenge.literalura.repository.AutorRepository;
 import com.alurachallenge.literalura.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +59,9 @@ public class LibroService {
 
     public void listarAutores() {
         autorService.listarAutores();
+    }
+
+    public void buscarAutoresPorAnno(int anno) {
+        autorService.buscarAutoresPorAnno(anno);
     }
 }

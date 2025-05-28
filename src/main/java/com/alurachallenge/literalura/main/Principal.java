@@ -45,6 +45,7 @@ public class Principal {
                     listarLibrosPorIdioma();
                     break;
                 case 5:
+                    buscarAutoresPorAnno();
                     break;
                 case 6:
                     break;
@@ -73,10 +74,11 @@ public class Principal {
     }
 
     private void opciones() {
-        System.out.println("1. Listar Libros");
-        System.out.println("2. Listar Autores");
-        System.out.println("3. Buscar Libro");
-        System.out.println("4. Listar Libros por idioma");
+        System.out.println("1. Listar libros");
+        System.out.println("2. Listar autores");
+        System.out.println("3. Buscar libro");
+        System.out.println("4. Listar libros por idioma");
+        System.out.println("5. Buscar autores por año");
         System.out.println("0. Salir");
     }
 
@@ -101,6 +103,15 @@ public class Principal {
         System.out.println("Selecciona un idioma para buscar:");
         String idioma = scanner.nextLine();
         libroService.listarLibrosPorIdioma(idioma);
+        System.out.println("*******************************\n");
+    }
+
+    private void buscarAutoresPorAnno() {
+        System.out.println("*******************************");
+        System.out.println("\tA continuación se muestran los autores que estaban vivos en un año específico\n");
+        System.out.println("Escriba un año para buscar:");
+        int anno = leerEntero();
+        libroService.buscarAutoresPorAnno(anno);
         System.out.println("*******************************\n");
     }
 

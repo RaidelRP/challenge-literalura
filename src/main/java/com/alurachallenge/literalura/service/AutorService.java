@@ -25,4 +25,9 @@ public class AutorService {
         var autores = autorRepository.findAll();
         autores.forEach(a -> System.out.printf("%s (%d - %d)\n", a.getNombre(), a.getNacimiento(), a.getMuerte()));
     }
+
+    public void buscarAutoresPorAnno(int anno) {
+        var autores = autorRepository.autoresPorAnno(anno);
+        autores.forEach(a -> System.out.printf("%s (%d - %d)\n", a.getNombre(), a.getNacimiento(), a.getMuerte()));
+    }
 }
